@@ -135,6 +135,7 @@
     |linksp      | yes       | no     | text          | 200 char   |
     |linklz      | yes       | no     | text          | 200 char   |
     |linkwa      | yes       | no     | text          | 200 char   |
+    |stock       | yes       | no     | num (1,0)     | 1          |
 
 * **Success response**
     * **code :** 201 Created<br />

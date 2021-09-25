@@ -3,7 +3,7 @@
 class Database{
     public $dbh;
     public $stmt;
-    
+
     // localhost
     private $db_host = 'localhost';
     private $db_name = 'db_tgadget';

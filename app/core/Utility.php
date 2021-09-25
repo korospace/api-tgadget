@@ -5,6 +5,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception as mailerException;
 
+// pass mailer
+// vhvknqqbpxdkknxa
+
 class Utility{
 
     /**
@@ -214,11 +217,11 @@ class Utility{
             $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
             $mail->Username   = 'yourmail@gmail.com';
-            $mail->Password   = 'yoursecret-pass';
+            $mail->Password   = 'secrettpass';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->setFrom('yourmail@gmail.com', 'your-username');
+            $mail->setFrom('yourmail@gmail.com', 'yourusername');
             $mail->addAddress($email);
             $mail->isHTML(true);
 

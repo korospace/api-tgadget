@@ -111,7 +111,7 @@ class Add extends BaseController{
             'linklz'       => 'required|max:200',
             'linkwa'       => 'required|max:200',
             'product_img'  => 'required|uploaded_file:0,200K,webp,png,jpeg',
-
+            'stock'        => 'required|max:1',
         ]);
         
         $validation->validate();
@@ -120,15 +120,18 @@ class Add extends BaseController{
             Utility::response(400,$validation->errors()->firstOfAll());
         }
         
-        $isExist        = [];
+        $myValidation   = [];
         $nameCheck      = $this->model("add_model")->isProductExist($this->user_id,'name',$_POST);
         $categoryCheck  = $this->model("add_model")->categoryCheck($this->user_id,$_POST['kategori']);
 
         if($nameCheck['status'] == true){
-            $isExist['product_name'] = "Product name is exist";
+            $myValidation['product_name'] = "Product name is exist";
         }
         if(!$categoryCheck){
-            $isExist['kategori']     = "kategori not found";
+            $myValidation['kategori']     = "kategori not found";
+        }
+        if(!in_array($_POST['stock'],['1','0'])){
+            $myValidation['stock'] = "must 1 or 0";
         }
         if(!empty($isExist)){
             Utility::response(400,$isExist);
