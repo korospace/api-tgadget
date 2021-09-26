@@ -134,7 +134,7 @@
 * **URL** <br>
   
   | Detail Target | url    | value  |
-  | :--:          |  :--:  |  :--:  |
+  | :--        |  :-- |  :-- |
   | update product viewers | /update/statistics?productid=:id   |**your product id* |
   | update store visitors  | /update/statistics?storename=:name | `tokopedia` `shopee`<br>`lazada` `whatsapp`<br>`ourwebsite` |
   | update store visitors at specific product  | /update/statistics?productid=:id&storename=:name | `productid` `storename` |
