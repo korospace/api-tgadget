@@ -3,12 +3,10 @@
 class Update extends BaseController{
 
     public $validator;
-    public string $user_id;
 
     public function __construct()
     {
         Utility::reqMethodCheck('PUT');
-        $this->user_id   = Utility::sessionCheck()['user_id'];
         $this->validator = new Rakit\Validation\Validator([
             // custom message
             'required' => ':attribute is required',
@@ -21,7 +19,8 @@ class Update extends BaseController{
      * Edit Socialmedia link
      */
     public function socialmedia(): void
-    {
+    {   
+        $user_id = Utility::sessionCheck()['user_id'];
         Utility::_methodParser('_PUT');
         global $_PUT;
 
@@ -39,7 +38,7 @@ class Update extends BaseController{
             Utility::response(400,$validation->errors()->firstOfAll());
         }
 
-        $this->model('update_model')->updateSocialmedia($this->user_id,$_PUT);
+        $this->model('update_model')->updateSocialmedia($user_id,$_PUT);
     }
 
     /**
@@ -47,6 +46,7 @@ class Update extends BaseController{
      */
     public function countdown(): void
     {
+        $user_id = Utility::sessionCheck()['user_id'];
         Utility::_methodParser('_PUT');
         global $_PUT;
 
@@ -77,7 +77,7 @@ class Update extends BaseController{
             $_PUT['type_poster'] = $_FILES['poster']['type'];
         }
 
-        $this->model("update_model")->updateCountdown($this->user_id,$_PUT);
+        $this->model("update_model")->updateCountdown($user_id,$_PUT);
     }
 
     /**
@@ -85,6 +85,7 @@ class Update extends BaseController{
      */
     public function product(): void
     {
+        $user_id = Utility::sessionCheck()['user_id'];
         Utility::_methodParser('_PUT');
         global $_PUT;
 
@@ -99,7 +100,7 @@ class Update extends BaseController{
             'linksp'       => 'required|max:200',
             'linklz'       => 'required|max:200',
             'linkwa'       => 'required|max:200',
-            'stock'        => 'required|max:1',
+            'stock'        => 'required|max:3',
         ]);
         
         $validation->validate();
@@ -109,8 +110,8 @@ class Update extends BaseController{
         }
 
         $validation = [];
-        $idCheck        = $this->model("add_model")->isProductExist($this->user_id,'id',$_PUT);
-        $categoryCheck  = $this->model("add_model")->categoryCheck($this->user_id,$_PUT['kategori']);
+        $idCheck        = $this->model("add_model")->isProductExist($user_id,'id',$_PUT);
+        $categoryCheck  = $this->model("add_model")->categoryCheck($user_id,$_PUT['kategori']);
         
         // check product ID
         if ($idCheck['status'] == false) {
@@ -118,7 +119,7 @@ class Update extends BaseController{
         }
         // check product name
         if ($_PUT['product_name'] != $idCheck['data']['name']) {
-            $nameCheck  = $this->model("add_model")->isProductExist($this->user_id,'name',$_PUT);
+            $nameCheck  = $this->model("add_model")->isProductExist($user_id,'name',$_PUT);
             
             if (($nameCheck['status'] == true)) {
                 $validation['product_name'] = "Product name is exist";
@@ -129,7 +130,7 @@ class Update extends BaseController{
         }
         
         (!Utility::numChecker($_PUT['price'])) ? $validation['price'] = "must integer" : '';
-        (!in_array($_PUT['stock'],['1','0']))  ? $validation['stock'] = "must 1 or 0"  : '';
+        (!in_array($_PUT['stock'],['yes','no']))  ? $validation['stock'] = "must yes or no"  : '';
         (!empty($validation)) ? Utility::response(400,$validation) : '';
 
         if(isset($_FILES['product_img'])){
@@ -140,45 +141,17 @@ class Update extends BaseController{
 
         (!empty($validation)) ? Utility::response(400,$validation) : '';
 
-        $this->model("update_model")->updateProduct($this->user_id,$_PUT);
+        $this->model("update_model")->updateProduct($user_id,$_PUT);
     }
 
     /**
-     * STATISTIC
-     * 
-     * method   : PUT
-     * endpoint : yourwebsite.com/update/statistics
-     * 
-     * authentication:
-     *  - header= x-api
-     * 
+     * Update statistics
      */
     public function statistic(): void
     {
         $user_id = Utility::apiKeyCheck()['user_id'];
-        Utility::_methodParser('_PUT');
-        global $_PUT;
-
-        if(isset($_PUT['id'])){
-            if(strlen($_PUT['id']) == 0){
-                Utility::response(400,"parameter 'id' is empty");
-            }    
-        }
-
-        if(isset($_PUT['column'])){
-            if(strlen($_PUT['column']) == 0){
-                Utility::response(400,"parameter 'column' is empty");
-            }
-        }
-
-        if(isset($_PUT['id']) || isset($_PUT['column'])){
-            $id       = (isset($_PUT['id']))     ? $_PUT['id'] : null;
-            $column   = (isset($_PUT['column'])) ? $_PUT['column'] : null;
-            $this->model('update_model')->updateStatistic($column,$id,$user_id);
-        }
-        else{
-            Utility::response(400,"missing parameter 'id' or 'column'!");
-        }
+        unset($_GET['url']);
+        $this->model('update_model')->updateStatistic($user_id,$_GET);
     }
 }
 

@@ -102,7 +102,7 @@ class Add extends BaseController{
     {
         $validation = $this->validator->make($_POST + $_FILES, [
             'product_name' => 'required|max:250',
-            'price'        => 'required|numeric|max:11',
+            'price'        => 'required|max:11',
             'kategori'     => 'required|max:20',
             'keyword'      => 'required|max:200',
             'deskripsi'    => 'required|max:1000',
@@ -111,7 +111,7 @@ class Add extends BaseController{
             'linklz'       => 'required|max:200',
             'linkwa'       => 'required|max:200',
             'product_img'  => 'required|uploaded_file:0,200K,webp,png,jpeg',
-            'stock'        => 'required|max:1',
+            'stock'        => 'required|max:3',
         ]);
         
         $validation->validate();
@@ -130,11 +130,14 @@ class Add extends BaseController{
         if(!$categoryCheck){
             $myValidation['kategori']     = "kategori not found";
         }
-        if(!in_array($_POST['stock'],['1','0'])){
-            $myValidation['stock'] = "must 1 or 0";
+        if(!in_array($_POST['stock'],['yes','no'])){
+            $myValidation['stock'] = "must yes or no";
         }
-        if(!empty($isExist)){
-            Utility::response(400,$isExist);
+        if (!Utility::numChecker($_POST['price'])) {
+            $myValidation['price'] = "must integer";
+        }
+        if(!empty($myValidation)){
+            Utility::response(400,$myValidation);
         }
 
         // get tmp file

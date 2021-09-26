@@ -217,11 +217,11 @@ class Utility{
             $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
             $mail->Username   = 'yourmail@gmail.com';
-            $mail->Password   = 'secrettpass';
+            $mail->Password   = 'secret-pass';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->setFrom('yourmail@gmail.com', 'yourusername');
+            $mail->setFrom('yourmail@gmail.com', 'your-username');
             $mail->addAddress($email);
             $mail->isHTML(true);
 

@@ -132,22 +132,17 @@
 
 ## 1.4 update statistic
 * **URL** <br>
-  ```
-  https://t-gadgetapi.herokuapp.com/update/statistic
-  ```
+  
+  | Detail Target | url    | value  |
+  | :--:          |  :--:  |  :--:  |
+  | update product viewers | /update/statistics?productid=:id   |**your product id* |
+  | update store visitors  | /update/statistics?storename=:name | -tokopedia<br>-shopee<br>-lazada<br>-whatsapp<br>-ourwebsite |
+  | update store visitors at specific product  | /update/statistics?productid=:id&storename=:name | -tokopedia<br>-shopee<br>-lazada<br>-whatsapp<br>-ourwebsite |
+
 * **Request method** <br>
-`POST`
+`PUT`
 * **Request header** 
   - api-key  <br>
-  - token  <br>
-* **Params body** <br> 
-    **choose param combination* <br>
-
-    | COMBINATION | DESCRIPTION | AVAILABLE_VALUE |
-    | :--:  |  :--:  |  :--:  |
-    | `id` & `column` | for update selected column value at table product with spesific product's id | `tokopedia` `shopee` <br> `lazada` `whatsapp` |
-    | `id`  | for update column 'viewers' value at table product with spesific product's id | (your product id) |
-    | `column`  | for update selected column value at table visitors | `tokopedia` `shopee` <br> `lazada` `whatsapp` `ourwebsite` |
 
 * **Success response**
     * **code :** 201 Created<br />
@@ -155,11 +150,7 @@
       ```
       { 
         "success": true,
-        "data": {
-          "table" : "",
-          "column" : "",
-          "current_value" : ""
-        } 
+        "message": "success update .."
       }
       ```
 * **Error Response:**

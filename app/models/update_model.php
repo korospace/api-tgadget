@@ -117,93 +117,53 @@ class Update_model{
     }
 
     /**
-     * STATISTIK - current value
+     * Update statistics
      */
-    public function currentValue(string $column1,string $table,string $column2,string $value,string $user_id)
-    : array
+    public function updateStatistic(string $userid,array $get): void
     {
         try {
-            $this->db->query("SELECT $column1 FROM $table WHERE $column2 = :value AND created_by = :user_id");
-            $this->db->bind('user_id',$user_id);
-            $this->db->bind('value',$value);
-            return $this->db->singleResult();
+            // update product viewers
+            if (isset($get['productid']) && !isset($get['storename'])) {
+                $productid   = $get['productid'];
+                $successMsg  = "success update product viewers with id $productid";
+                $failedMsg   = "product viewers with id $productid not found";
+    
+                $this->db->query("UPDATE products SET viewers=viewers+1 WHERE id=:productid AND created_by=:userid");
+                $this->db->bind('productid',$productid);
+            }
+            // update visitors
+            else if (isset($get['storename']) && !isset($get['productid'])) {
+                $column      = $get['storename'];
+                $successMsg  = "success update $column visitors";
+    
+                $this->db->query("UPDATE visitors SET $column=$column+1 WHERE created_by=:userid");
+            }
+            // update product link visitors
+            else if (isset($get['productid']) && isset($get['storename'])) {
+                $productid   = $get['productid'];
+                $column      = $get['storename'];
+                $successMsg  = "success update $column visitors with product id $productid";
+                $failedMsg   = "$column visitors with product id $productid not found";
+    
+                $this->db->query("UPDATE products SET $column=$column+1 WHERE id=:productid AND created_by=:userid");
+                $this->db->bind('productid',$productid);
+            }
+            else {
+                Utility::response(404,"parameter not match");
+            }
+            
+            $this->db->bind('userid',$userid);
+            $this->db->execute();
+
+            if($this->db->rowCount() > 0 ){
+                Utility::response(201,$successMsg);
+            }
+            else {
+                Utility::response(404,$failedMsg);
+            }
         } 
         catch (Exception $err) {
             Utility::response(500,$err->getMessage());
-        }
-    }
-
-    /**
-     * STATISTIK - update
-     */
-    public function updateStatistic(?string $atribut = null,?string $id = null,string $user_id): void
-    {
-        // .. column viewers in table products
-        if($id != null && $atribut != null){
-            try {
-                $this->db->query("UPDATE products SET $atribut=$atribut+1 WHERE id=:id AND created_by=:user_id");
-                $this->db->bind('id',     $id);
-                $this->db->bind('user_id',$user_id);
-                $this->db->execute();
-
-                if($this->db->rowCount()){
-                    Utility::response(201,[
-                        'table'  => 'products',
-                        'column' => $atribut,
-                        'current_value' => $this->currentValue($atribut,'products','id',$id,$user_id)[$atribut]
-                    ]);
-                }
-                else{
-                    Utility::response(404,"'$atribut' with product id '$id' not found !");
-                }
-            } 
-            catch (Exception $err) {
-                Utility::response(500,$err->getMessage());
-            }
-        }
-        // .. column viewers in table products
-        if($id != null){
-            try {
-                $this->db->query("UPDATE products SET viewers = viewers+1 WHERE id=:id AND created_by=:user_id");
-                $this->db->bind('id',$id);
-                $this->db->bind('user_id',$user_id);
-                $this->db->execute();
-
-                if($this->db->rowCount()){
-                    Utility::response(201,[
-                        'table'  => 'products',
-                        'column' => 'viewers',
-                        'current_value' => $this->currentValue("viewers",'products','id',$id,$user_id)["viewers"]
-                    ]);
-                }
-                else{
-                    Utility::response(404,"product with id '$id' not found !");
-                }
-            } 
-            catch (Exception $err) {
-                Utility::response(500,$err->getMessage());
-            }
-        }
-        // .. table visitors
-        if($atribut != null){
-            try {
-                $this->db->query("UPDATE visitors SET $atribut = $atribut+1 WHERE created_by=:user_id");
-                $this->db->bind('user_id',$user_id);
-                
-                if($this->db->execute()){
-                    Utility::response(201,[
-                        'table'  => 'visitors',
-                        'column' => $atribut,
-                        'current_value' => $this->currentValue($atribut,'visitors','created_by',$user_id,$user_id)[$atribut]
-                    ]);
-                }
-                else{
-                    Utility::response(404,"atribut with name '$atribut' not found !");
-                }
-            } 
-            catch (Exception $err) {
-                Utility::response(500,$err->getMessage());
-            }
         }
     }
 
