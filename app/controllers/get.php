@@ -77,7 +77,7 @@ class Get extends BaseController{
 
         // query param check
         foreach ($_GET as $key => $value) {
-            if(!in_array($key,["url","id","limit","offset","kategori","keyword"])){
+            if(!in_array($key,["url","id","limit","offset","kategori","keyword","filterBy","filterVal"])){
                 Utility::response(400,"invalid parameter '$key'");
             }
             if(strlen($value) == 0){
