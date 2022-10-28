@@ -18,7 +18,7 @@ class Database{
     public function __construct()
     {
         $dsn = "mysql:host=$this->db_host;port=$this->db_port;dbname=$this->db_name";
-
+        
         $option = [
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
