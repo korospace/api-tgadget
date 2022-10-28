@@ -93,17 +93,17 @@ class Get extends BaseController{
             $dataFilter['limit']  = $_GET['limit'];
             $dataFilter['offset'] = $_GET['offset'];
             
-            // if(isset($_GET['filterBy'])){
-            //     if (!isset($_GET['filterVal'])) {
-            //         Utility::response(400,"missing parameter 'filterVal'!");
-            //     }
-            //     if(!in_array($_GET['filterBy'],["kategori","keyword"])){
-            //         Utility::response(400,"undifined filterBy ".$_GET['filterBy']."!");
-            //     }
+            if(isset($_GET['filterBy'])){
+                if (!isset($_GET['filterVal'])) {
+                    Utility::response(400,"missing parameter 'filterVal'!");
+                }
+                if(!in_array($_GET['filterBy'],["kategori","keyword"])){
+                    Utility::response(400,"undifined filterBy ".$_GET['filterBy']."!");
+                }
 
-            //     $dataFilter['filterBy']  = $_GET['filterBy'];
-            //     $dataFilter['filterVal'] = $_GET['filterVal'];
-            // }
+                $dataFilter['filterBy']  = $_GET['filterBy'];
+                $dataFilter['filterVal'] = $_GET['filterVal'];
+            }
             
             $this->model('get_model')->getProducts($dataFilter);
         }

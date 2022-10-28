@@ -197,16 +197,16 @@ class Get_model{
     {
         try{
             if (isset($dataFilter['limit'])) {
-                // if (isset($dataFilter['filterBy'])) {
-                //     $filterBy = $dataFilter['filterBy'];
-                //     $filterVal = $dataFilter['filterVal'];
+                if (isset($dataFilter['filterBy'])) {
+                    $filterBy = $dataFilter['filterBy'];
+                    $filterVal = $dataFilter['filterVal'];
 
-                //     $this->db->query("SELECT * FROM products WHERE $filterBy = :filterVal AND created_by = :user_id ORDER BY id DESC LIMIT :offset,:limitt");
-                //     $this->db->bind("filterVal",$filterVal);
-                // }
-                // else{
-                //     $this->db->query("SELECT * FROM products WHERE created_by = :user_id ORDER BY id DESC LIMIT :offset,:limitt");
-                // }
+                    $this->db->query("SELECT * FROM products WHERE $filterBy = :filterVal AND created_by = :user_id ORDER BY id DESC LIMIT :offset,:limitt");
+                    $this->db->bind("filterVal",$filterVal);
+                }
+                else{
+                    $this->db->query("SELECT * FROM products WHERE created_by = :user_id ORDER BY id DESC LIMIT :offset,:limitt");
+                }
 
                 $this->db->query("SELECT * FROM products WHERE created_by = :user_id ORDER BY id DESC LIMIT :offset,:limitt");
                 $this->db->bind("user_id",$dataFilter['user_id']);
