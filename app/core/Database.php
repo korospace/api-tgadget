@@ -5,14 +5,19 @@ class Database{
     public $stmt;
 
     // localhost
-    private $db_host = 'localhost';
-    private $db_name = 'db_tgadget';
+    // private $db_host = 'localhost';
+    // private $db_name = 'db_tgadget';
+    // private $db_user = 'root';
+    // private $db_pass = '';
+    private $db_host = 'containers-us-west-57.railway.app';
+    private $db_name = 'railway';
     private $db_user = 'root';
-    private $db_pass = 'root';
+    private $db_pass = '2330oP5P0N5EvPuBcwb0';
+    private $db_port = '5916';
 
     public function __construct()
     {
-        $dsn = "mysql:host=$this->db_host;dbname=$this->db_name";
+        $dsn = "mysql:host=$this->db_host;port=$this->db_port;dbname=$this->db_name";
 
         $option = [
             PDO::ATTR_PERSISTENT => true,
