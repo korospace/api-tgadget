@@ -214,7 +214,7 @@ class Utility{
         $mail = new PHPMailer(true);
 
         try {
-            $mail->isSMTP();                          
+            // $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
             $mail->Username   = 'elkoro424@gmail.com';
             $mail->Password   = 'wrwebdlhlewaxsio';

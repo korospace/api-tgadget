@@ -8,6 +8,6 @@
 </head>
 <body style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
     <h1>verification success</h1>
-    <a href="admin-tgadget.web.app">login</a>
+    <a href="https://admin-tgadget.web.app/">login</a>
 </body>
 </html>
