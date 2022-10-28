@@ -13,7 +13,7 @@ class User extends BaseController{
         
         $validator  = new Validator;
         $validation = $validator->validate($_POST, [
-            'email'    => 'required|email|max:30',
+            'email'    => 'required|email|max:50',
             'username' => 'required|min:8|max:20',
             'password' => 'required|min:8|max:20',
         ]);
