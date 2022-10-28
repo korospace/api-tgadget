@@ -9,11 +9,11 @@ class Database{
     // private $db_name = 'db_tgadget';
     // private $db_user = 'root';
     // private $db_pass = '';
-    private $db_host = 'containers-us-west-57.railway.app';
+    private $db_host = 'containers-us-west-37.railway.app';
     private $db_name = 'railway';
     private $db_user = 'root';
-    private $db_pass = '2330oP5P0N5EvPuBcwb0';
-    private $db_port = '5916';
+    private $db_pass = 'zaVeco3YvfCZbKeEP7zy';
+    private $db_port = '7003';
 
     public function __construct()
     {
