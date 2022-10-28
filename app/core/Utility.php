@@ -216,17 +216,17 @@ class Utility{
         try {
             $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
-            $mail->Username   = 'yourmail@gmail.com';
-            $mail->Password   = 'secret-pass';
+            $mail->Username   = 'elkoro424@gmail.com';
+            $mail->Password   = 'wrwebdlhlewaxsio';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->setFrom('yourmail@gmail.com', 'your-username');
+            $mail->setFrom('elkoro424@gmail.com', 't-admin');
             $mail->addAddress($email);
             $mail->isHTML(true);
 
             $mail->Subject = 'email verification';
-            $mail->Body    = "Click the link below to verify your account:<br><a href='https://t-gadgetapi.herokuapp.com/user/verification/$api_key'>https://t-gadgetapi.herokuapp.com/user/verification/$api_key</a>";
+            $mail->Body    = "Click the link below to verify your account:<br><a href='https://api-tgadget.up.railway.app/user/verification/$api_key'>https://api-tgadget.up.railway.app/user/verification/$api_key</a>";
 
             if($mail->send()) {
                 return true;
