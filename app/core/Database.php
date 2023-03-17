@@ -5,15 +5,18 @@ class Database{
     public $stmt;
 
     // localhost
-    // private $db_host = 'localhost';
-    // private $db_name = 'db_tgadget';
-    // private $db_user = 'root';
-    // private $db_pass = '';
-    private $db_host = 'containers-us-west-37.railway.app';
-    private $db_name = 'railway';
+    private $db_host = 'localhost';
+    private $db_name = 'db_tgadget';
     private $db_user = 'root';
-    private $db_pass = 'zaVeco3YvfCZbKeEP7zy';
-    private $db_port = '7003';
+    private $db_pass = '';
+    private $db_port = '3306';
+
+    // 000webhost
+    // private $db_host = 'localhost';
+    // private $db_name = 'id20443530_tadmin';
+    // private $db_user = 'id20443530_user_tadmin';
+    // private $db_pass = 'tp!5AbM3=7|[ilB8';
+    // private $db_port = '3306';
 
     public function __construct()
     {
